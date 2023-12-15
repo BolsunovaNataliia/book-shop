@@ -1,7 +1,9 @@
 package mate.academy.bookshop.dto;
 
+import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import java.math.BigDecimal;
 import lombok.Data;
 import mate.academy.bookshop.validation.Isbn;
@@ -10,17 +12,20 @@ import mate.academy.bookshop.validation.Isbn;
 public class CreateBookRequestDto {
     private Long id;
     @NotNull
+    @Size(max = 255)
     private String title;
     @NotNull
+    @Size(max = 255)
     private String author;
     @Isbn
     @NotNull
     private String isbn;
     @NotNull
     @Min(0)
+    @Max(100000)
     private BigDecimal price;
-    @NotNull
+    @Size(max = 255)
     private String description;
-    @NotNull
+    @Size(max = 255)
     private String coverImage;
 }
