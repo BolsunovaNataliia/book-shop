@@ -6,6 +6,7 @@ import jakarta.validation.Valid;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import mate.academy.bookshop.dto.BookDto;
+import mate.academy.bookshop.dto.BookSearchParameters;
 import mate.academy.bookshop.dto.CreateBookRequestDto;
 import mate.academy.bookshop.service.BookService;
 import org.springframework.data.domain.Pageable;
@@ -57,5 +58,10 @@ public class BookController {
     public BookDto updateById(
             @PathVariable Long id, @RequestBody CreateBookRequestDto createBookRequestDto) {
         return bookService.updateById(id, createBookRequestDto);
+    }
+
+    @GetMapping("/search")
+    public List<BookDto> search(BookSearchParameters searchParameters) {
+        return bookService.search(searchParameters);
     }
 }
