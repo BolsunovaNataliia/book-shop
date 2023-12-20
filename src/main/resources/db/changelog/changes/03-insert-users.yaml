@@ -1,0 +1,29 @@
+databaseChangeLog:
+  - changeSet:
+      id: insert-users
+      author: nbols
+      changes:
+        - insert:
+            tableName: users
+            columns:
+              - column: { name: email, value: "ola@example.com" }
+              - column: { name: password, value: "qwerty01" }
+              - column: { name: first_name, value: "Ola" }
+              - column: { name: last_name, value: "La" }
+              - column: { name: shipping_address, value: "123 Main st, City, Country" }
+        - insert:
+            tableName: users
+            columns:
+              - column: { name: email, value: "mila@example.com" }
+              - column: { name: password, value: "qwerty02" }
+              - column: { name: first_name, value: "Mila" }
+              - column: { name: last_name, value: "Ma" }
+              - column: { name: shipping_address, value: "124 Main st, City, Country" }
+        - insert:
+            tableName: users
+            columns:
+              - column: { name: email, value: "alex@example.com" }
+              - column: { name: password, value: "qwerty03" }
+              - column: { name: first_name, value: "Alex" }
+              - column: { name: last_name, value: "Berg" }
+              - column: { name: shipping_address, value: "125 Main st, City, Country" }
