@@ -13,7 +13,7 @@ import java.lang.annotation.Target;
 @Retention(RUNTIME)
 @Constraint(validatedBy = PasswordMatchValidator.class)
 @Documented
-public @interface PasswordMatch {
+public @interface PasswordFieldMatch {
     String message() default "{error.password.mismatch}";
 
     Class<?>[] groups() default {};

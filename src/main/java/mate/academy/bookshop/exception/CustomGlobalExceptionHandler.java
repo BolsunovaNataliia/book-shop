@@ -47,7 +47,7 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
     @ExceptionHandler({RegistrationException.class})
     public ResponseEntity<Object> handleRegistrationException(RegistrationException exception) {
         return ResponseEntity
-                .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .status(HttpStatus.BAD_REQUEST)
                 .body(exception.getMessage());
     }
 }

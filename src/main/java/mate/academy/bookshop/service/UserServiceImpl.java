@@ -7,7 +7,6 @@ import mate.academy.bookshop.exception.RegistrationException;
 import mate.academy.bookshop.mapper.UserMapper;
 import mate.academy.bookshop.model.User;
 import mate.academy.bookshop.repository.user.UserRepository;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
@@ -21,7 +20,7 @@ public class UserServiceImpl implements UserService {
             throws RegistrationException {
         if (userRepository.findByEmail(requestDto.getEmail()).isPresent()) {
             throw new RegistrationException("The user with this email is already registered "
-                    + requestDto.getEmail(), HttpStatus.BAD_REQUEST);
+                    + requestDto.getEmail());
         }
         User user = new User();
         user.setEmail(requestDto.getEmail());

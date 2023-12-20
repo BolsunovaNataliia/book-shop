@@ -5,9 +5,9 @@ import jakarta.validation.ConstraintValidatorContext;
 import mate.academy.bookshop.dto.UserRegistrationRequestDto;
 
 public class PasswordMatchValidator implements
-        ConstraintValidator<PasswordMatch, UserRegistrationRequestDto> {
+        ConstraintValidator<PasswordFieldMatch, UserRegistrationRequestDto> {
     @Override
-    public void initialize(PasswordMatch p) {
+    public void initialize(PasswordFieldMatch p) {
     }
 
     public boolean isValid(UserRegistrationRequestDto requestDto, ConstraintValidatorContext c) {
