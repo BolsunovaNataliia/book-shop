@@ -9,14 +9,18 @@ import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
-@Target(TYPE)
+@Target({TYPE})
 @Retention(RUNTIME)
-@Constraint(validatedBy = PasswordMatchValidator.class)
+@Constraint(validatedBy = FieldMatchValidator.class)
 @Documented
-public @interface PasswordFieldMatch {
-    String message() default "{error.password.mismatch}";
+public @interface FieldMatch {
+    String message() default "Fields must match";
 
     Class<?>[] groups() default {};
 
     Class<? extends Payload>[] payload() default {};
+
+    String first();
+
+    String second();
 }
