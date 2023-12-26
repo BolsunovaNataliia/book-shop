@@ -3,6 +3,7 @@ package mate.academy.bookshop.config;
 import static org.springframework.security.config.Customizer.withDefaults;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -19,6 +20,9 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
+    @Value("${public.endpoints}")
+    private String[] publicEndpoints;
+
     private final UserDetailsService userDetailsService;
 
     @Bean
@@ -33,7 +37,7 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(
                         auth -> auth
-                                .requestMatchers("/auth/**", "/error", "/swagger-ui/**")
+                                .requestMatchers(publicEndpoints)
                                 .permitAll()
                                 .anyRequest()
                                 .authenticated()
