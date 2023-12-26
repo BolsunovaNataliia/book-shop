@@ -31,6 +31,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class BookController {
     private final BookService bookService;
 
+    @PreAuthorize("hasAnyAuthority('ROLE_USER', 'ROLE_ADMIN')")
     @GetMapping
     @Operation(summary = "Get all books", description = "Get a list of all available books")
     public List<BookDto> findAll(Authentication authentication, Pageable pageable) {
@@ -38,6 +39,7 @@ public class BookController {
         return bookService.findAll(user.getEmail(), pageable);
     }
 
+    @PreAuthorize("hasAnyAuthority('ROLE_USER', 'ROLE_ADMIN')")
     @GetMapping ("/{id}")
     @Operation(summary = "Get a book by id", description = "Get a book by id")
     public BookDto findBookById(@PathVariable Long id) {
