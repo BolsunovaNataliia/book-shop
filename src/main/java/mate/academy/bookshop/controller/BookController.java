@@ -8,9 +8,13 @@ import lombok.RequiredArgsConstructor;
 import mate.academy.bookshop.dto.BookDto;
 import mate.academy.bookshop.dto.BookSearchParameters;
 import mate.academy.bookshop.dto.CreateBookRequestDto;
+import mate.academy.bookshop.model.User;
 import mate.academy.bookshop.service.BookService;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,8 +34,9 @@ public class BookController {
 
     @GetMapping
     @Operation(summary = "Get all books", description = "Get a list of all available books")
-    public List<BookDto> findAll(Pageable pageable) {
-        return bookService.findAll(pageable);
+    public List<BookDto> findAll(Authentication authentication, Pageable pageable) {
+        User user = (User) authentication.getPrincipal();
+        return bookService.findAll(user.getEmail(), pageable);
     }
 
     @GetMapping ("/{id}")
@@ -40,12 +45,14 @@ public class BookController {
         return bookService.findById(id);
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping
     @Operation(summary = "Save a new book", description = "Save a new book")
     public BookDto save(@RequestBody @Valid CreateBookRequestDto requestDto) {
         return bookService.save(requestDto);
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/{id}")
     @Operation(summary = "Delete a book by id", description = "Delete a book by id")
@@ -53,6 +60,7 @@ public class BookController {
         bookService.deleteById(id);
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping(value = "/{id}", consumes = {"application/json"})
     @Operation(summary = "Update a book by id", description = "Update a book by id")
     public BookDto updateById(

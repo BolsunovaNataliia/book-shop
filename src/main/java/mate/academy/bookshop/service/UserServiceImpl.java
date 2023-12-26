@@ -5,15 +5,20 @@ import mate.academy.bookshop.dto.UserRegistrationRequestDto;
 import mate.academy.bookshop.dto.UserResponseDto;
 import mate.academy.bookshop.exception.RegistrationException;
 import mate.academy.bookshop.mapper.UserMapper;
+import mate.academy.bookshop.model.Role;
 import mate.academy.bookshop.model.User;
 import mate.academy.bookshop.repository.user.UserRepository;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.Set;
 
 @RequiredArgsConstructor
 @Service
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public UserResponseDto register(UserRegistrationRequestDto requestDto)
@@ -23,6 +28,10 @@ public class UserServiceImpl implements UserService {
                     + requestDto.getEmail());
         }
         User user = userMapper.toModel(requestDto);
+        user.setPassword(passwordEncoder.encode(requestDto.getPassword()));
+        Role role = new Role();
+        role.setName(Role.RoleName.USER);
+        user.setRoles(Set.of(role));
         return userMapper.toDto(userRepository.save(user));
     }
 }
