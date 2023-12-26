@@ -30,11 +30,11 @@ public class Role implements GrantedAuthority {
 
     @Override
     public String getAuthority() {
-        return RoleName.USER.name();
+        return RoleName.ROLE_USER.name();
     }
 
     public enum RoleName {
-        USER,
-        ADMIN
+        ROLE_USER,
+        ROLE_ADMIN
     }
 }
