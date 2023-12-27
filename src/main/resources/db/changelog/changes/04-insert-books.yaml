@@ -1,0 +1,32 @@
+databaseChangeLog:
+  - changeSet:
+      id: insert-books
+      author: nbols
+      changes:
+        - insert:
+            tableName: books
+            columns:
+              - column: { name: title, value: "some title 1" }
+              - column: { name: author, value: "some author 1" }
+              - column: { name: isbn, value: "123-4-123-4-5" }
+              - column: { name: price, value: "1200" }
+              - column: { name: description, value: "some description 1" }
+              - column: { name: cover_image, value: "some link 1" }
+        - insert:
+              tableName: books
+              columns:
+                - column: { name: title, value: "some title 2" }
+                - column: { name: author, value: "some author 2" }
+                - column: { name: isbn, value: "123-4-123-4-6" }
+                - column: { name: price, value: "1100" }
+                - column: { name: description, value: "some description 2" }
+                - column: { name: cover_image, value: "some link 2" }
+        - insert:
+            tableName: books
+            columns:
+              - column: { name: title, value: "some title 3" }
+              - column: { name: author, value: "some author 3" }
+              - column: { name: isbn, value: "123-4-123-4-7" }
+              - column: { name: price, value: "1550" }
+              - column: { name: description, value: "some description 3" }
+              - column: { name: cover_image, value: "some link 3" }
