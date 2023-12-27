@@ -4,7 +4,6 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import mate.academy.bookshop.dto.UserLoginRequestDto;
 import mate.academy.bookshop.dto.UserRegistrationRequestDto;
 import mate.academy.bookshop.dto.UserResponseDto;
 import mate.academy.bookshop.exception.RegistrationException;
@@ -26,10 +25,5 @@ public class AuthController {
     public UserResponseDto registerUser(@RequestBody @Valid UserRegistrationRequestDto requestDto)
             throws RegistrationException {
         return userService.register(requestDto);
-    }
-
-    @PostMapping("/login")
-    public boolean login(@RequestBody UserLoginRequestDto requestDto) {
-        return true;
     }
 }
