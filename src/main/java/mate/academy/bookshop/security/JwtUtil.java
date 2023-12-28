@@ -9,19 +9,19 @@ import java.nio.charset.StandardCharsets;
 import java.security.Key;
 import java.util.Date;
 import java.util.function.Function;
-import org.springframework.beans.factory.annotation.Value;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @Component
+@RequiredArgsConstructor
 public class JwtUtil {
-    private Key secret;
+    private static final String SECRET_ROW = "whatabeautifulweathertodaywhatabeautifulweathertoday";
+    private static final long EXPIRATION = 300000;
 
-    @Value("${jwt.expiration}")
-    private long expiration;
+    private final Key secret = Keys.hmacShaKeyFor(
+            SECRET_ROW.getBytes(StandardCharsets.UTF_8));
 
-    public JwtUtil(@Value("${jwt.secret}") String secretString) {
-        secret = Keys.hmacShaKeyFor(secretString.getBytes(StandardCharsets.UTF_8));
-    }
+    private final long expiration = EXPIRATION;
 
     public String generateToken(String username) {
         return Jwts.builder()
@@ -46,8 +46,8 @@ public class JwtUtil {
     public String getUsername(String token) {
         return getClaimFromToken(token, Claims::getSubject);
     }
-    // check import Function
-    public <T>  T getClaimFromToken(String token, Function<Claims, T> claimsResolver) {
+
+    public <T> T getClaimFromToken(String token, Function<Claims, T> claimsResolver) {
         final Claims claims = Jwts.parserBuilder()
                 .setSigningKey(secret)
                 .build()

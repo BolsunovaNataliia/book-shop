@@ -13,7 +13,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -35,7 +34,6 @@ public class BookController {
     @GetMapping
     @Operation(summary = "Get all books", description = "Get a list of all available books")
     public List<BookDto> findAll(Authentication authentication, Pageable pageable) {
-        Authentication authentication1 = SecurityContextHolder.getContext().getAuthentication();
         String email = authentication.getName();
         return bookService.findAll(email, pageable);
     }
