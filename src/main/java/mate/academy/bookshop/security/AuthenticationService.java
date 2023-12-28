@@ -3,7 +3,6 @@ package mate.academy.bookshop.security;
 import lombok.RequiredArgsConstructor;
 import mate.academy.bookshop.dto.user.UserLoginRequestDto;
 import mate.academy.bookshop.dto.user.UserLoginResponseDto;
-import mate.academy.bookshop.security.JwtUtil;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
