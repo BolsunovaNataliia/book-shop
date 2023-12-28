@@ -1,0 +1,15 @@
+databaseChangeLog:
+  - changeSet:
+      id: insert-categories
+      author: nbols
+      changes:
+        - insert:
+            tableName: categories
+            columns:
+              - column: { name: name, value: "history" }
+              - column: { name: description, value: "some histories" }
+        - insert:
+            tableName: categories
+            columns:
+              - column: { name: name, value: "adventure" }
+              - column: { name: description, value: "some adventures" }

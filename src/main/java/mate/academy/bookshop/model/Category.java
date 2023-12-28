@@ -23,4 +23,10 @@ public class Category {
     private String name;
     private String description;
     private boolean isDeleted = false;
+
+    public Category(Long id) {
+    }
+
+    public Category() {
+    }
 }

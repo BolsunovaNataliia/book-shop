@@ -12,7 +12,6 @@ import jakarta.persistence.Table;
 import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
-
 import lombok.Data;
 import org.apache.commons.lang3.builder.EqualsExclude;
 import org.apache.commons.lang3.builder.HashCodeExclude;
@@ -49,4 +48,10 @@ public class Book {
     @EqualsExclude
     @HashCodeExclude
     private Set<Category> categories = new HashSet<>();
+
+    public Book(Long t) {
+    }
+
+    public Book() {
+    }
 }
