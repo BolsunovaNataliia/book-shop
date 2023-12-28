@@ -9,14 +9,12 @@ import java.nio.charset.StandardCharsets;
 import java.security.Key;
 import java.util.Date;
 import java.util.function.Function;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 @Component
-@RequiredArgsConstructor
 public class JwtUtil {
-    private Key secret;
+    private final Key secret;
 
     @Value("${jwt.expiration}")
     private long expiration;
@@ -28,7 +26,8 @@ public class JwtUtil {
     public String generateToken(String username) {
         return Jwts.builder()
                 .setSubject(username)
-                .setIssuedAt(new Date(System.currentTimeMillis() + expiration))
+                .setExpiration(new Date(System.currentTimeMillis() + expiration))
+                .setIssuedAt(new Date(System.currentTimeMillis()))
                 .signWith(secret)
                 .compact();
     }
@@ -39,7 +38,11 @@ public class JwtUtil {
                     .setSigningKey(secret)
                     .build()
                     .parseClaimsJws(token);
-            return !claimsJws.getBody().getExpiration().before(new Date());
+            Date expiration = claimsJws.getBody().getExpiration();
+            if (expiration == null) {
+                throw new RuntimeException("This token don't have expiration");
+            }
+            return !expiration.before(new Date());
         } catch (JwtException | IllegalArgumentException e) {
             throw new JwtException("Expired or invalid JWT token");
         }
