@@ -1,9 +1,8 @@
-package mate.academy.bookshop.service;
+package mate.academy.bookshop.security;
 
 import lombok.RequiredArgsConstructor;
 import mate.academy.bookshop.dto.user.UserLoginRequestDto;
 import mate.academy.bookshop.dto.user.UserLoginResponseDto;
-import mate.academy.bookshop.security.JwtUtil;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -13,7 +12,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class AuthenticationService {
     private final JwtUtil jwtUtil;
-
     private final AuthenticationManager authenticationManager;
 
     public UserLoginResponseDto authenticate(UserLoginRequestDto requestDto) {
@@ -23,7 +21,6 @@ public class AuthenticationService {
         );
 
         String token = jwtUtil.generateToken(authentication.getName());
-
         return new UserLoginResponseDto(token);
     }
 }

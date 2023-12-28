@@ -18,9 +18,9 @@ import org.springframework.web.filter.OncePerRequestFilter;
 @Component
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
-
+    private static final String HEADER_AUTHORIZATION = "Authorization";
+    private static final String FIRST_PART_BEARER_TOKEN = "Bearer ";
     private final JwtUtil jwtUtil;
-
     private final UserDetailsService userDetailsService;
 
     @Override
@@ -30,7 +30,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             FilterChain filterChain
     ) throws ServletException, IOException {
         String token = getToken(request);
-        if (token != null && jwtUtil.isValidToken(token)) {
+        if (token != null && jwtUtil.isTokenValid(token)) {
             String username = jwtUtil.getUsername(token);
             UserDetails userDetails = userDetailsService.loadUserByUsername(username);
             Authentication authentication = new UsernamePasswordAuthenticationToken(
@@ -42,9 +42,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     }
 
     private String getToken(HttpServletRequest request) {
-        String bearerToken = request.getHeader("Authorization");
-        if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {
-            return bearerToken.substring(7);
+        String bearerToken = request.getHeader(HEADER_AUTHORIZATION);
+        if (StringUtils.hasText(bearerToken) && bearerToken.startsWith(FIRST_PART_BEARER_TOKEN)) {
+            return bearerToken.substring(FIRST_PART_BEARER_TOKEN.length());
         }
         return null;
     }
