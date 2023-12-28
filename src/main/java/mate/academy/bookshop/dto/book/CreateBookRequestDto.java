@@ -1,4 +1,4 @@
-package mate.academy.bookshop.dto;
+package mate.academy.bookshop.dto.book;
 
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;

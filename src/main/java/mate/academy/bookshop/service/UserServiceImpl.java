@@ -2,8 +2,8 @@ package mate.academy.bookshop.service;
 
 import java.util.Set;
 import lombok.RequiredArgsConstructor;
-import mate.academy.bookshop.dto.UserRegistrationRequestDto;
-import mate.academy.bookshop.dto.UserResponseDto;
+import mate.academy.bookshop.dto.user.UserRegistrationRequestDto;
+import mate.academy.bookshop.dto.user.UserResponseDto;
 import mate.academy.bookshop.exception.RegistrationException;
 import mate.academy.bookshop.mapper.UserMapper;
 import mate.academy.bookshop.model.Role;

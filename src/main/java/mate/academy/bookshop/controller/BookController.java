@@ -5,10 +5,9 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
-import mate.academy.bookshop.dto.BookDto;
-import mate.academy.bookshop.dto.BookSearchParameters;
-import mate.academy.bookshop.dto.CreateBookRequestDto;
-import mate.academy.bookshop.model.User;
+import mate.academy.bookshop.dto.book.BookDto;
+import mate.academy.bookshop.dto.book.BookSearchParameters;
+import mate.academy.bookshop.dto.book.CreateBookRequestDto;
 import mate.academy.bookshop.service.BookService;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -35,8 +34,8 @@ public class BookController {
     @GetMapping
     @Operation(summary = "Get all books", description = "Get a list of all available books")
     public List<BookDto> findAll(Authentication authentication, Pageable pageable) {
-        User user = (User) authentication.getPrincipal();
-        return bookService.findAll(user.getEmail(), pageable);
+        String email = authentication.getName();
+        return bookService.findAll(email, pageable);
     }
 
     @PreAuthorize("hasAnyAuthority('ROLE_USER', 'ROLE_ADMIN')")
