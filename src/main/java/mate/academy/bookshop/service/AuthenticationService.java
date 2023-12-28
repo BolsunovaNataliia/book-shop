@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class AuthenticationService {
     private final JwtUtil jwtUtil;
-
     private final AuthenticationManager authenticationManager;
 
     public UserLoginResponseDto authenticate(UserLoginRequestDto requestDto) {
@@ -23,7 +22,6 @@ public class AuthenticationService {
         );
 
         String token = jwtUtil.generateToken(authentication.getName());
-
         return new UserLoginResponseDto(token);
     }
 }

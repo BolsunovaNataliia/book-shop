@@ -10,18 +10,20 @@ import java.security.Key;
 import java.util.Date;
 import java.util.function.Function;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
 public class JwtUtil {
-    private static final String SECRET_ROW = "whatabeautifulweathertodaywhatabeautifulweathertoday";
-    private static final long EXPIRATION = 300000;
+    private Key secret;
 
-    private final Key secret = Keys.hmacShaKeyFor(
-            SECRET_ROW.getBytes(StandardCharsets.UTF_8));
+    @Value("${jwt.expiration}")
+    private long expiration;
 
-    private final long expiration = EXPIRATION;
+    public JwtUtil(@Value("${jwt.secret}") String secretString) {
+        secret = Keys.hmacShaKeyFor(secretString.getBytes(StandardCharsets.UTF_8));
+    }
 
     public String generateToken(String username) {
         return Jwts.builder()
@@ -31,7 +33,7 @@ public class JwtUtil {
                 .compact();
     }
 
-    public boolean isValidToken(String token) {
+    public boolean isTokenValid(String token) {
         try {
             Jws<Claims> claimsJws = Jwts.parserBuilder()
                     .setSigningKey(secret)
