@@ -28,9 +28,8 @@ public class CartItem {
     private ShoppingCart shoppingCart;
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
-    @Column(nullable = false)
     @ManyToOne
-    @JoinColumn(name = "book_id")
+    @JoinColumn(name = "book_id", nullable = false)
     private Book book;
     @Column(nullable = false)
     private int quantity;

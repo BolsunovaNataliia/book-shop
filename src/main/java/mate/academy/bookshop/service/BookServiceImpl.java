@@ -44,6 +44,7 @@ public class BookServiceImpl implements BookService {
                 .toList();
     }
 
+    @Transactional
     @Override
     public BookDto findById(Long id) {
         return bookMapper.toDto(bookRepository.findById(id)
