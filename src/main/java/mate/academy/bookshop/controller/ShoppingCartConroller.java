@@ -4,11 +4,10 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import mate.academy.bookshop.dto.cart.AddToCartRequestDto;
-import mate.academy.bookshop.dto.cart.CartDto;
-import mate.academy.bookshop.dto.cart.CartItemDto;
+import mate.academy.bookshop.dto.shoppingcart.AddToCartRequestDto;
+import mate.academy.bookshop.dto.shoppingcart.ShoppingCartDto;
 import mate.academy.bookshop.model.User;
-import mate.academy.bookshop.service.CartService;
+import mate.academy.bookshop.service.ShoppingCartService;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
@@ -25,25 +24,25 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/cart")
-public class CartConroller {
-    private final CartService cartService;
+public class ShoppingCartConroller {
+    private final ShoppingCartService shoppingCartService;
 
     @PreAuthorize("hasAnyAuthority('ROLE_USER', 'ROLE_ADMIN')")
     @PostMapping
-    @Operation(summary = "Save the book to the shopping cart",
-            description = "Save the book to the shopping cart")
-    public CartItemDto save(@RequestBody @Valid Authentication authentication,
-                            AddToCartRequestDto requestDto) {
+    @Operation(summary = "Add the book to the shopping cart",
+            description = "Add the book to the shopping cart")
+    public ShoppingCartDto addToCart(@RequestBody @Valid Authentication authentication,
+                                     AddToCartRequestDto requestDto) {
         User user = (User)authentication.getPrincipal();
-        return cartService.save(user.getId(), requestDto);
+        return shoppingCartService.addToCart(user.getId(), requestDto);
     }
 
     @PreAuthorize("hasAnyAuthority('ROLE_USER', 'ROLE_ADMIN')")
     @GetMapping("/{id}")
     @Operation(summary = "Get a book in the cart by id",
             description = "Get a book in the cart by id")
-    public CartDto findById(@PathVariable Long id) {
-        return cartService.findById(id);
+    public ShoppingCartDto findById(@PathVariable Long id) {
+        return shoppingCartService.findById(id);
     }
 
     @PreAuthorize("hasAnyAuthority('ROLE_USER', 'ROLE_ADMIN')")
@@ -52,6 +51,6 @@ public class CartConroller {
     @Operation(summary = "Delete a book from the cart by id",
             description = "Delete a book from the cart by id")
     public void delete(@PathVariable(name = "id") Long bookId) {
-        cartService.deleteById(bookId);
+        shoppingCartService.deleteById(bookId);
     }
 }

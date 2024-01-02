@@ -1,4 +1,4 @@
-package mate.academy.bookshop.dto.cart;
+package mate.academy.bookshop.dto.shoppingcart;
 
 public class CartItemDto {
     private Long id;
