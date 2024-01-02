@@ -11,7 +11,6 @@ databaseChangeLog:
                   type: bigint
                   constraints:
                     primaryKey: true
-                    nullable: false
                     references: books(id)
                     foreignKeyName: fk_book_category_book_id
                     deleteCascade: true
@@ -20,7 +19,6 @@ databaseChangeLog:
                   type: bigint
                   constraints:
                     primaryKey: true
-                    nullable: false
                     references: categories(id)
                     foreignKeyName: fk_book_category_category_id
                     deleteCascade: true
