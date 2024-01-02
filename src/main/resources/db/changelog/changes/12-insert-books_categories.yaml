@@ -1,0 +1,51 @@
+databaseChangeLog:
+  - changeSet:
+      id: insert-books_categories
+      author: nbols
+      preConditions:
+        - sqlCheck:
+            expectedResult: 1
+            sql: SELECT COUNT(*) FROM books WHERE title='some title 1'
+        - sqlCheck:
+            expectedResult: 1
+            sql: SELECT COUNT(*) FROM categories WHERE name='history'
+        - sqlCheck:
+            expectedResult: 1
+            sql: SELECT COUNT(*) FROM books WHERE title='some title 2'
+        - sqlCheck:
+            expectedResult: 1
+            sql: SELECT COUNT(*) FROM categories WHERE name='adventure'
+        - sqlCheck:
+            expectedResult: 1
+            sql: SELECT COUNT(*) FROM books WHERE title='some title 3'
+        - sqlCheck:
+            expectedResult: 1
+            sql: SELECT COUNT(*) FROM categories WHERE name='adventure'
+      changes:
+        - insert:
+            tableName: books_categories
+            columns:
+              - column:
+                  name: book_id
+                  valueComputed: (SELECT id FROM books WHERE title='some title 1')
+              - column:
+                  name: category_id
+                  valueComputed: (SELECT id FROM categories WHERE name='history')
+        - insert:
+            tableName: books_categories
+            columns:
+              - column:
+                  name: book_id
+                  valueComputed: (SELECT id FROM books WHERE title='some title 2')
+              - column:
+                  name: category_id
+                  valueComputed: (SELECT id FROM categories WHERE name='adventure')
+        - insert:
+            tableName: books_categories
+            columns:
+              - column:
+                  name: book_id
+                  valueComputed: (SELECT id FROM books WHERE title='some title 3')
+              - column:
+                  name: category_id
+                  valueComputed: (SELECT id FROM categories WHERE name='adventure')
