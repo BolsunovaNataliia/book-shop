@@ -22,9 +22,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-@RequiredArgsConstructor
-@RestController
-@RequestMapping("/categories")
+    @RequiredArgsConstructor
+    @RestController
+    @RequestMapping("/categories")
 public class CategoryController {
     private final CategoryService categoryService;
     private final BookService bookService;
@@ -32,6 +32,7 @@ public class CategoryController {
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping
     @Operation(summary = "Create a new category", description = "Create a new category")
+    @ResponseStatus(HttpStatus.CREATED)
     public CategoryDto createCategory(@RequestBody @Valid CategoryRequestDto requestDto) {
         return categoryService.save(requestDto);
     }
