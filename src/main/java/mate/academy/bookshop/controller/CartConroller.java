@@ -28,12 +28,12 @@ import org.springframework.web.bind.annotation.RestController;
 public class CartConroller {
     private final CartService cartService;
 
-
     @PreAuthorize("hasAnyAuthority('ROLE_USER', 'ROLE_ADMIN')")
     @PostMapping
     @Operation(summary = "Save the book to the shopping cart",
             description = "Save the book to the shopping cart")
-    public CartItemDto save(@RequestBody @Valid Authentication authentication, AddToCartRequestDto requestDto) {
+    public CartItemDto save(@RequestBody @Valid Authentication authentication,
+                            AddToCartRequestDto requestDto) {
         User user = (User)authentication.getPrincipal();
         return cartService.save(user.getId(), requestDto);
     }

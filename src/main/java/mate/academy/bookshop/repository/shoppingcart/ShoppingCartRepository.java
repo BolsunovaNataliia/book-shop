@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
 public interface ShoppingCartRepository
         extends JpaRepository<ShoppingCart, Long>, JpaSpecificationExecutor<ShoppingCart> {
-//    @Query("SELECT sc FROM ShoppingCart sc JOIN Fetch sc.cartItems ci WHERE ci.id = :shoppingCartId")
+//    @Query(
+//    "SELECT sc FROM ShoppingCart sc JOIN Fetch sc.cartItems ci WHERE ci.id = :shoppingCartId")
 //    List<ShoppingCart> findById(@PathVariable(name = "id") Long categoryId);
 }

@@ -5,5 +5,5 @@ import java.util.Set;
 public class CartDto {
     private Long id;
     private Long userId;
-    Set<CartItemDto> cartItems;
+    private Set<CartItemDto> cartItems;
 }
