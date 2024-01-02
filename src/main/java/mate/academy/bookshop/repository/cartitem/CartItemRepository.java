@@ -4,7 +4,8 @@ import mate.academy.bookshop.model.CartItem;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
-public interface ShoppingCartItemRepository
+public interface CartItemRepository
         extends JpaRepository<CartItem, Long>, JpaSpecificationExecutor<CartItem> {
 
+    CartItem findCartItemById(Long id);
 }
