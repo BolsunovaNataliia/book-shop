@@ -5,6 +5,6 @@ import lombok.Data;
 
 @Data
 public class UpdateQuantityBookRequestDto {
-    @Min(0)
+    @Min(1)
     private int quantity;
 }
