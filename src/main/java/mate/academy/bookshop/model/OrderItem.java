@@ -43,11 +43,4 @@ public class OrderItem {
     private BigDecimal price;
     @Column(nullable = false)
     private boolean isDeleted = false;
-
-
-//    id (Long, PK)
-//order (Order, not null)
-//book (Book, not null)
-//quantity (int, not null)
-//price (BigDecimal, not null)
 }

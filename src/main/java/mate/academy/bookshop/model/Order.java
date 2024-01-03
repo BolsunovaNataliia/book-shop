@@ -45,7 +45,7 @@ public class Order {
     @CreationTimestamp
     @Column(nullable = false)
     private LocalDateTime orderDate;
-    @Column(nullable = false)
+    @Column(name = "shipping_address", nullable = false)
     private String shippingAddress;
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
@@ -55,8 +55,10 @@ public class Order {
     private boolean isDeleted = false;
 
     public enum Status {
-        COMPLETED,
         PENDING,
-        DELIVERED
+        SHIPPED,
+        DELIVERED,
+        COMPLETED,
+        CANCELLED
     }
 }
