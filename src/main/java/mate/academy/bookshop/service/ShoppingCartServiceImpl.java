@@ -49,6 +49,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     }
 
     @Override
+    @Transactional
     public ShoppingCartDto updateQuantityByCartItemId(
             Long userId, Long cartItemId, UpdateQuantityBookRequestDto requestDto) {
         ShoppingCart shoppingCartFromDb = getShoppingCartByUserId(userId);

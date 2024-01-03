@@ -20,7 +20,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@Tag(name = "Cart management", description = "Endpoints for managing cart")
+@Tag(name = "Shopping cart management",
+        description = "Endpoints for managing shopping cart")
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/cart")
@@ -29,19 +30,18 @@ public class ShoppingCartConroller {
 
     @PreAuthorize("hasAnyAuthority('ROLE_USER', 'ROLE_ADMIN')")
     @PostMapping
-    @Operation(summary = "Add the book to the shopping cart",
-            description = "Add the book to the shopping cart")
-    public ShoppingCartDto addToCart(
-            @RequestBody @Valid Authentication authentication,
-                                     AddToCartRequestDto requestDto) {
+    @Operation(summary = "Add a cart item to the shopping cart",
+            description = "Add a cart item to the shopping cart")
+    public ShoppingCartDto addToCart(Authentication authentication,
+            @RequestBody @Valid AddToCartRequestDto requestDto) {
         User user = (User)authentication.getPrincipal();
         return shoppingCartService.addToCart(user.getId(), requestDto);
     }
 
     @PreAuthorize("hasAnyAuthority('ROLE_USER', 'ROLE_ADMIN')")
     @GetMapping
-    @Operation(summary = "Get a book in the cart by id",
-            description = "Get a book in the cart by id")
+    @Operation(summary = "Get a user's shopping cart",
+            description = "Get a user's shopping cart")
     public ShoppingCartDto findById(Authentication authentication) {
         User user = (User)authentication.getPrincipal();
         return shoppingCartService.findById(user.getId());
@@ -63,9 +63,10 @@ public class ShoppingCartConroller {
 
     @PreAuthorize("hasAnyAuthority('ROLE_USER', 'ROLE_ADMIN')")
     @DeleteMapping("/cart-items/{id}")
-    @Operation(summary = "Delete a book from the cart by id",
-            description = "Delete a book from the cart by id")
-    public void delete(Authentication authentication, @PathVariable(name = "id") Long cartItemId) {
+    @Operation(summary = "Delete a book from the shopping cart by cart item id",
+            description = "Delete a book from the shopping cart by cart item id")
+    public void delete(Authentication authentication,
+                       @PathVariable(name = "id") Long cartItemId) {
         User user = (User)authentication.getPrincipal();
         shoppingCartService.deleteCartItemById(user.getId(), cartItemId);
     }
