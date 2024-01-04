@@ -24,6 +24,7 @@ import mate.academy.bookshop.repository.order.OrderRepository;
 import mate.academy.bookshop.repository.orderitem.OrderItemRepository;
 import mate.academy.bookshop.repository.shoppingcart.ShoppingCartRepository;
 import mate.academy.bookshop.repository.user.UserRepository;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -78,7 +79,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<OrderDto> getOrdersHistory(Long userId) {
+    public List<OrderDto> getAll(Long userId, Pageable pageable) {
         return orderRepository.findAllByUserId(userId).stream()
                 .map(orderMapper::toDto)
                 .toList();
@@ -102,7 +103,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Set<OrderItemDto> getAllOrderItems(Long userId, Long orderId) {
+    public Set<OrderItemDto> getAllOrderItems(Long userId, Long orderId, Pageable pageable) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new EntityNotFoundException(
                         "There is not found user with id " + userId));
@@ -121,15 +122,15 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public OrderItemDto getOrderItemById(Long userId, Long orderItemId) {
+    public OrderItemDto getItemById(Long userId, Long orderId, Long itemId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new EntityNotFoundException(
                         "There is not found user with id " + userId));
-        OrderItem orderItem = orderItemRepository.findById(orderItemId).orElseThrow(
+        OrderItem orderItem = orderItemRepository.findById(itemId).orElseThrow(
                 () -> new EntityNotFoundException(
-                        "There is not found order item with id " + orderItemId));
-        if (orderItem.getOrder().getUser().equals(user)) {
-            throw new RuntimeException("For this user absent order item with id " + orderItemId);
+                        "There is not found order item with id " + itemId));
+        if (!orderItem.getOrder().getUser().equals(user)) {
+            throw new RuntimeException("For this user absent order item with id " + itemId);
         }
         return orderItemMapper.toDto(orderItem);
     }
