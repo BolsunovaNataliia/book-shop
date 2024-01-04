@@ -87,17 +87,11 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     @Transactional
-    public OrderDto updateStatusOrder(Long userId, Long orderId,
+    public OrderDto updateStatusOrder(Long orderId,
                                           UpdateStatusRequestDto statusRequestDto) {
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new EntityNotFoundException(
-                        "There is not found user with id " + userId));
         Order order = orderRepository.findById(orderId).orElseThrow(
                 () -> new EntityNotFoundException(
                         "There is not found order with id " + orderId));
-        if (!order.getUser().equals(user)) {
-            throw new RuntimeException("For this user absent order with id " + orderId);
-        }
         order.setStatus(statusRequestDto.getStatus());
         return orderMapper.toDto(order);
     }
@@ -129,7 +123,10 @@ public class OrderServiceImpl implements OrderService {
         OrderItem orderItem = orderItemRepository.findById(itemId).orElseThrow(
                 () -> new EntityNotFoundException(
                         "There is not found order item with id " + itemId));
-        if (!orderItem.getOrder().getUser().equals(user)) {
+        Order order = orderRepository.findById(orderId).orElseThrow(
+                () -> new EntityNotFoundException(
+                        "There is not found order with id " + orderId));
+        if (!order.getUser().equals(user)) {
             throw new RuntimeException("For this user absent order item with id " + itemId);
         }
         return orderItemMapper.toDto(orderItem);

@@ -55,11 +55,9 @@ public class OrderController {
     @PutMapping("/{id}")
     @Operation(summary = "Update order status",
             description = "Update order status by order id")
-    OrderDto updateOrderStatus(Authentication authentication,
-                               @PathVariable(name = "id") Long orderId,
+    OrderDto updateOrderStatus(@PathVariable(name = "id") Long orderId,
                                @RequestBody @Valid UpdateStatusRequestDto statusRequestDto) {
-        User user = (User) authentication.getPrincipal();
-        return orderService.updateStatusOrder(user.getId(), orderId, statusRequestDto);
+        return orderService.updateStatusOrder(orderId, statusRequestDto);
     }
 
     @PreAuthorize("hasAnyAuthority('ROLE_USER', 'ROLE_ADMIN')")
