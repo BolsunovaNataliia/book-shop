@@ -56,7 +56,7 @@ public class OrderServiceImpl implements OrderService {
                     "There is not found any cart items in the shopping cart of user with id "
                             + userId);
         }
-        BigDecimal total = new BigDecimal(0);
+        BigDecimal total = BigDecimal.ZERO;
         for (CartItem cartItem: cartItems) {
             Book book = cartItem.getBook();
             int quantity = cartItem.getQuantity();
@@ -108,27 +108,16 @@ public class OrderServiceImpl implements OrderService {
             throw new RuntimeException("For this user absent order with id " + orderId);
         }
         Set<OrderItem> orderItems = order.getOrderItems();
-        Set<OrderItemDto> orderItemDtos = new HashSet<>();
-        for (OrderItem item: orderItems) {
-            orderItemDtos.add(orderItemMapper.toDto(item));
-        }
-        return orderItemDtos;
+        return orderItemMapper.toDtoSet(orderItems);
     }
 
     @Override
     public OrderItemDto getItemById(Long userId, Long orderId, Long itemId) {
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new EntityNotFoundException(
-                        "There is not found user with id " + userId));
-        OrderItem orderItem = orderItemRepository.findById(itemId).orElseThrow(
-                () -> new EntityNotFoundException(
-                        "There is not found order item with id " + itemId));
-        Order order = orderRepository.findById(orderId).orElseThrow(
-                () -> new EntityNotFoundException(
-                        "There is not found order with id " + orderId));
-        if (!order.getUser().equals(user)) {
-            throw new RuntimeException("For this user absent order item with id " + itemId);
-        }
+        OrderItem orderItem = orderItemRepository
+                .findByIdAndOrderId(userId, itemId, orderId).orElseThrow(
+                        () -> new EntityNotFoundException(
+                                "OrderItem with id " + itemId
+                                        + " not found in order with id " + orderId));
         return orderItemMapper.toDto(orderItem);
     }
 }

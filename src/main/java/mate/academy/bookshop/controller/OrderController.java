@@ -16,9 +16,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -31,7 +31,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class OrderController {
     private final OrderService orderService;
 
-    @PreAuthorize("hasAnyAuthority('ROLE_USER', 'ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_USER')")
     @PostMapping
     @Operation(summary = "Place user's order by shipping address",
             description = "Place user's order by shipping address")
@@ -41,7 +41,7 @@ public class OrderController {
         return orderService.placeOrder(user.getId(), requestDto);
     }
 
-    @PreAuthorize("hasAnyAuthority('ROLE_USER', 'ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_USER')")
     @GetMapping
     @Operation(summary = "Get user's order history",
             description = "Get user's order history")
@@ -52,7 +52,7 @@ public class OrderController {
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @PutMapping("/{id}")
+    @PatchMapping("/{id}")
     @Operation(summary = "Update order status",
             description = "Update order status by order id")
     OrderDto updateOrderStatus(@PathVariable(name = "id") Long orderId,
@@ -60,7 +60,7 @@ public class OrderController {
         return orderService.updateStatusOrder(orderId, statusRequestDto);
     }
 
-    @PreAuthorize("hasAnyAuthority('ROLE_USER', 'ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_USER')")
     @GetMapping("/{orderId}/items")
     @Operation(summary = "Get all user's order items",
             description = "Get all user's order items for specific order")
@@ -71,7 +71,7 @@ public class OrderController {
         return orderService.getAllOrderItems(user.getId(), orderId, pageable);
     }
 
-    @PreAuthorize("hasAnyAuthority('ROLE_USER', 'ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_USER')")
     @GetMapping("/{orderId}/items/{itemId}")
     @Operation(summary = "Get specific order item from order",
             description = "Get specific order item from order")

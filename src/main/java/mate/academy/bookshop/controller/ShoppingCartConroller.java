@@ -28,7 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class ShoppingCartConroller {
     private final ShoppingCartService shoppingCartService;
 
-    @PreAuthorize("hasAnyAuthority('ROLE_USER', 'ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_USER')")
     @PostMapping
     @Operation(summary = "Add a cart item to the shopping cart",
             description = "Add a cart item to the shopping cart")
@@ -38,7 +38,7 @@ public class ShoppingCartConroller {
         return shoppingCartService.addToCart(user.getId(), requestDto);
     }
 
-    @PreAuthorize("hasAnyAuthority('ROLE_USER', 'ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_USER')")
     @GetMapping
     @Operation(summary = "Get a user's shopping cart",
             description = "Get a user's shopping cart")
@@ -47,7 +47,7 @@ public class ShoppingCartConroller {
         return shoppingCartService.findById(user.getId());
     }
 
-    @PreAuthorize("hasAnyAuthority('ROLE_USER', 'ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_USER')")
     @PutMapping("/cart-items/{id}")
     @Operation(summary = "Update book's quantity by cart item id",
             description = "Update book's quantity by cart item id")
@@ -61,7 +61,7 @@ public class ShoppingCartConroller {
                 .updateQuantityByCartItemId(user.getId(), cartItemId, requestDto);
     }
 
-    @PreAuthorize("hasAnyAuthority('ROLE_USER', 'ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_USER')")
     @DeleteMapping("/cart-items/{id}")
     @Operation(summary = "Delete a book from the shopping cart by cart item id",
             description = "Delete a book from the shopping cart by cart item id")
