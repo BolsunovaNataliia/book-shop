@@ -13,7 +13,7 @@ public interface OrderService {
 
     List<OrderDto> getAll(Long userId, Pageable pageable);
 
-    OrderDto updateStatusOrder(Long orderId, UpdateStatusRequestDto statusRequestDto);
+    OrderDto updateOrderStatus(Long orderId, UpdateStatusRequestDto statusRequestDto);
 
     Set<OrderItemDto> getAllOrderItems(Long userId, Long orderId, Pageable pageable);
 

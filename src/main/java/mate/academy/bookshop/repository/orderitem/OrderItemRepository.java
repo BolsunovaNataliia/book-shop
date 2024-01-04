@@ -16,5 +16,5 @@ public interface OrderItemRepository
             AND oi.order.id = :orderId
             AND oi.order.user.id = :userId
             """)
-    Optional<OrderItem> findByIdAndOrderId(Long userId, Long itemId, Long orderId);
+    Optional<OrderItem> findByIdAndOrderIdForCurrentUser(Long userId, Long itemId, Long orderId);
 }

@@ -57,7 +57,7 @@ public class OrderController {
             description = "Update order status by order id")
     OrderDto updateOrderStatus(@PathVariable(name = "id") Long orderId,
                                @RequestBody @Valid UpdateStatusRequestDto statusRequestDto) {
-        return orderService.updateStatusOrder(orderId, statusRequestDto);
+        return orderService.updateOrderStatus(orderId, statusRequestDto);
     }
 
     @PreAuthorize("hasRole('ROLE_USER')")
