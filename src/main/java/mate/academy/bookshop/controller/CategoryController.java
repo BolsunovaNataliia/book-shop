@@ -37,7 +37,7 @@ public class CategoryController {
         return categoryService.save(requestDto);
     }
 
-    @PreAuthorize("hasAnyAuthority('ROLE_USER', 'ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_USER')")
     @GetMapping
     @Operation(summary = "Get all categories",
             description = "Get a list of all available categories")
@@ -45,7 +45,7 @@ public class CategoryController {
         return categoryService.getAll(pageable);
     }
 
-    @PreAuthorize("hasAnyAuthority('ROLE_USER', 'ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_USER')")
     @GetMapping ("/{id}")
     @Operation(summary = "Get a category by id", description = "Get a category by id")
     public CategoryDto getCategoryById(@PathVariable Long id) {
@@ -68,7 +68,7 @@ public class CategoryController {
         categoryService.deleteById(id);
     }
 
-    @PreAuthorize("hasAnyAuthority('ROLE_USER', 'ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_USER')")
     @GetMapping ("/{id}/books")
     @Operation(summary = "Get a books by category id", description = "Get a books by category id")
     public List<BookDtoWithoutCategoryIds> getBooksByCategoryId(
