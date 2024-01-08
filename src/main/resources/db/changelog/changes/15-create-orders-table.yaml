@@ -21,7 +21,7 @@ databaseChangeLog:
                     foreignKeyName: fk_orders_user_id
               - column:
                   name: status
-                  type: ENUM('PENDING', 'SHIPPED', 'DELIVERED', 'COMPLETED', 'CANCELLED')
+                  type: varchar(255)
                   constraints:
                     nullable: false
                     unique: true
