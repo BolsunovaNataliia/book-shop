@@ -8,7 +8,7 @@ databaseChangeLog:
             sql: SELECT COUNT(*) FROM users WHERE email='admin@example.com'
         - sqlCheck:
             expectedResult: 1
-            sql: SELECT COUNT(*) FROM roles WHERE name='ROLE_ADMIN'
+            sql: SELECT COUNT(*) FROM roles WHERE role_name='ADMIN'
       changes:
         - insert:
             tableName: users_roles
@@ -18,7 +18,7 @@ databaseChangeLog:
                   valueComputed: (SELECT id FROM users WHERE email='admin@example.com')
               - column:
                   name: role_id
-                  valueComputed: (SELECT id FROM roles WHERE name='ROLE_ADMIN')
+                  valueComputed: (SELECT id FROM roles WHERE role_name='ADMIN')
         - insert:
             tableName: users_roles
             columns:
@@ -27,7 +27,7 @@ databaseChangeLog:
                   valueComputed: (SELECT id FROM users WHERE email='admin@example.com')
               - column:
                   name: role_id
-                  valueComputed: (SELECT id FROM roles WHERE name='ROLE_USER')
+                  valueComputed: (SELECT id FROM roles WHERE role_name='USER')
         - insert:
             tableName: users_roles
             columns:
@@ -36,7 +36,7 @@ databaseChangeLog:
                   valueComputed: (SELECT id FROM users WHERE email='mila@example.com')
               - column:
                   name: role_id
-                  valueComputed: (SELECT id FROM roles WHERE name='ROLE_USER')
+                  valueComputed: (SELECT id FROM roles WHERE role_name='USER')
         - insert:
             tableName: users_roles
             columns:
@@ -45,4 +45,4 @@ databaseChangeLog:
                   valueComputed: (SELECT id FROM users WHERE email='alex@example.com')
               - column:
                   name: role_id
-                  valueComputed: (SELECT id FROM roles WHERE name='ROLE_USER')
+                  valueComputed: (SELECT id FROM roles WHERE role_name='USER')
