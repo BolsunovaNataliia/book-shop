@@ -2,7 +2,6 @@ package mate.academy.bookshop.repository.book;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -10,6 +9,7 @@ import java.util.Set;
 import mate.academy.bookshop.model.Book;
 import mate.academy.bookshop.model.Category;
 import mate.academy.bookshop.repository.category.CategoryRepository;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -24,6 +24,7 @@ public class BookRepositoryTest {
     private CategoryRepository categoryRepository;
 
     @Test
+    @DisplayName("Get all books by category id")
     public void findAllByCategoryId_WithOneCategory_ShouldReturnListOfBooks() {
         // Given
         Category category = new Category();
@@ -59,10 +60,6 @@ public class BookRepositoryTest {
         // Then
         assertFalse(actual.isEmpty());
         assertEquals(2, actual.size());
-        List<String> expectedTitles = List.of(book1.getTitle(), book2.getTitle());
-        List<String> actualTitles = actual.stream()
-                .map(Book::getTitle)
-                .toList();
-        assertTrue(actualTitles.containsAll(expectedTitles));
+        assertEquals(List.of(book1, book2), actual);
     }
 }

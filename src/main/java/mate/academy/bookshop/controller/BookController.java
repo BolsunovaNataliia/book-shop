@@ -12,7 +12,6 @@ import mate.academy.bookshop.service.BookService;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -33,7 +32,7 @@ public class BookController {
     @PreAuthorize("hasRole('ROLE_USER')")
     @GetMapping
     @Operation(summary = "Get all books", description = "Get a list of all available books")
-    public List<BookDto> findAll(Authentication authentication, Pageable pageable) {
+    public List<BookDto> findAll(Pageable pageable) {
         return bookService.findAll(pageable);
     }
 
