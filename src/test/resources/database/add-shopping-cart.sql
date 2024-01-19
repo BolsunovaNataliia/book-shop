@@ -12,6 +12,3 @@ INSERT INTO users (id, email, password, first_name, last_name, shipping_address,
 
 -- Insert shopping_carts
 INSERT INTO shopping_carts (id, user_id, is_deleted) VALUES (2, 4, false);
-
--- Insert cart_items
-INSERT INTO cart_items (id, shopping_cart_id, book_id, quantity, is_deleted) VALUES (2, 2, 4, 2, false);

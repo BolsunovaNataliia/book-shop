@@ -7,15 +7,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.transaction.Transactional;
 import java.sql.Connection;
-import java.util.HashSet;
 import java.util.Set;
 import javax.sql.DataSource;
-
-import jakarta.transaction.Transactional;
 import lombok.SneakyThrows;
 import mate.academy.bookshop.dto.shoppingcart.AddToCartRequestDto;
-import mate.academy.bookshop.dto.shoppingcart.CartItemDto;
 import mate.academy.bookshop.dto.shoppingcart.ShoppingCartDto;
 import mate.academy.bookshop.mapper.ShoppingCartMapper;
 import mate.academy.bookshop.model.Book;
@@ -50,15 +47,18 @@ import org.springframework.web.context.WebApplicationContext;
 public class ShoppingCartControllerTest {
     protected static MockMvc mockMvc;
     private static final Long ADMIN_ROLE_ID = 1L;
-    private static final Long USER_ROLE_ID = 2L;
     private static final Long USER_ID = 4L;
+    private static final Long USER_ROLE_ID = 2L;
     private static final String CLASS_PATH_RESOURCE_ADD =
             "database/add-shopping-cart.sql";
     private static final String CLASS_PATH_RESOURCE_DELETE =
             "database/remove-added-shopping-cart.sql";
     private static final String USER_EMAIL = "john@gmail.com";
+    private static final String USER_FIRST_NAME = "John";
+    private static final String USER_LAST_NAME = "Fisher";
     private static final String USER_PASSWORD =
             "$2a$10$fRCKtHfKmoKkzXByokmM6.FVmatskXfInb.IYBUI1ukvDBjN4EqGG";
+    private static final String USER_SHOPPING_ADDRESS = "City Street 1";
     @Autowired
     private ObjectMapper objectMapper;
     @Autowired
@@ -66,7 +66,7 @@ public class ShoppingCartControllerTest {
 
     @BeforeAll
     @SneakyThrows
-    private static void setup(@Autowired DataSource dataSource,
+    public static void setup(@Autowired DataSource dataSource,
                               @Autowired WebApplicationContext applicationContext) {
         teardown(dataSource);
         mockMvc = MockMvcBuilders
@@ -98,7 +98,7 @@ public class ShoppingCartControllerTest {
     }
 
     @AfterAll
-    private static void afterAll(
+    public static void afterAll(
             @Autowired DataSource dataSource
     ) {
         teardown(dataSource);
@@ -117,26 +117,23 @@ public class ShoppingCartControllerTest {
                 .setCategories(Set.of(category));
         User user = new User()
                 .setId(4L)
-                .setEmail("john@gmail.com")
-                .setPassword("$2a$10$Y4PPXA2tkW1VGLBSDYEtFuQoGFZQVBolKlp25x6KIBrHupP53dzWm")
-                .setFirstName("John")
-                .setLastName("Fisher")
-                .setShippingAddress("City Street 1");
-        AddToCartRequestDto requestDto = new AddToCartRequestDto()
-                .setBookId(book.getId())
-                .setQuantity(2);
+                .setEmail(USER_EMAIL)
+                .setPassword(USER_PASSWORD)
+                .setFirstName(USER_FIRST_NAME)
+                .setLastName(USER_LAST_NAME)
+                .setShippingAddress(USER_SHOPPING_ADDRESS);
         ShoppingCart shoppingCart = new ShoppingCart()
                 .setId(2L)
                 .setUser(user);
         CartItem cartItem = new CartItem()
-                .setId(2L)
+                .setId(1L)
                 .setBook(book)
                 .setQuantity(2)
                 .setShoppingCart(shoppingCart);
-        Set<CartItem> cartItems = new HashSet<>();
-        cartItems.add(cartItem);
-        shoppingCart.setCartItems(cartItems);
         shoppingCart.setCartItems(Set.of(cartItem));
+        AddToCartRequestDto requestDto = new AddToCartRequestDto()
+                .setBookId(book.getId())
+                .setQuantity(2);
         ShoppingCartDto expectedShoppingCartDto = shoppingCartMapper.toDto(shoppingCart);
         String jsonBody = objectMapper.writeValueAsString(requestDto);
 

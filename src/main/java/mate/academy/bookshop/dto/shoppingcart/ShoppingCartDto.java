@@ -1,8 +1,6 @@
 package mate.academy.bookshop.dto.shoppingcart;
 
 import java.util.Set;
-
-import jakarta.persistence.Access;
 import lombok.Data;
 import lombok.experimental.Accessors;
 

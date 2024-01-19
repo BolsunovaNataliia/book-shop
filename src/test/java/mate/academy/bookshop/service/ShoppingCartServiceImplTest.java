@@ -47,14 +47,14 @@ public class ShoppingCartServiceImplTest {
                 .setEmail("john@gmail.com");
         Book book = new Book()
                 .setId(1L);
-        AddToCartRequestDto requestDto = new AddToCartRequestDto()
-                .setBookId(1L)
-                .setQuantity(10);
         cartItemRepository.save(new CartItem().setId(1L));
         ShoppingCart shoppingCart = new ShoppingCart()
                 .setId(1L)
                 .setUser(user);
         ShoppingCartDto shoppingCartDto = new ShoppingCartDto();
+        AddToCartRequestDto requestDto = new AddToCartRequestDto()
+                .setBookId(1L)
+                .setQuantity(10);
         Mockito.when(userRepository.findById(user.getId()))
                 .thenReturn(Optional.of(user));
         Mockito.when(bookRepository.findById(book.getId()))
