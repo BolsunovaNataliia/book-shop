@@ -40,6 +40,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         cartItem.setShoppingCart(shoppingCartFromDb);
         cartItemRepository.save(cartItem);
         shoppingCartFromDb.getCartItems().add(cartItem);
+        shoppingCartRepository.save(shoppingCartFromDb);
         return shoppingCartMapper.toDto(shoppingCartFromDb);
     }
 
