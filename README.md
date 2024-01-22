@@ -26,13 +26,13 @@ ___
 ## 👽 Entities 👽
 
 * 📕 Book: Represents a book available in the store.
-* 🤓 Contains information about the registered user.
+* 🤓 User: Contains information about the registered user.
 * 💼 Role: Represents the role of a user in the system (admin / user).
 * 🎨 Category: Represents a category that a book can belong to.
-* 🎁 Order: 
-* 📚 Order item: 
-* 🛒 Shopping cart:
-* 📚 Cart item: 
+* 🛒 Shopping cart: Role: Represents the role of a user in the system (admin / user).
+* 📚 Cart item: Represents an item in a user's shopping cart.
+* 🎁 Order: Represents an order placed by a user.
+* 📚 Order item: Represents an item in a user's order.
 ---
 ## 🎯 Functionality 🎯
 
